@@ -37,33 +37,17 @@
   .stack { display: flex; flex-direction: column; gap: var(--space-4); }
   .center { text-align: center; align-items: center; }
 
-  /* Hero: full-bleed photo, glass controls on top */
-  .hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    min-height: clamp(560px, 92svh, 940px);
-    display: flex;
-    align-items: flex-end;
-    text-align: center;
-    color: #ffffff;
-    padding-block: calc(env(safe-area-inset-top, 0px) + 120px) var(--space-9);
-    box-sizing: border-box;
-  }
-  .hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-  .hero-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(12, 4, 7, 0.4) 0%, rgba(12, 4, 7, 0.08) 38%, rgba(12, 4, 7, 0.66) 100%); }
-  .hero-content { width: 100%; }
-  .hero-mark { width: clamp(80px, 10vw, 112px); height: auto; color: #ffffff; margin-bottom: var(--space-2); }
+  /* Hero: the mark and the name on a clean ground, nothing else */
+  .hero { text-align: center; padding-block: calc(env(safe-area-inset-top, 0px) + 84px + var(--space-9)) var(--space-6); }
+  .hero-mark { width: clamp(88px, 11vw, 120px); height: auto; color: var(--brand-bright); margin-bottom: var(--space-2); }
   .hero h1 { font: 500 clamp(64px, 13vw, 148px)/0.95 var(--font-sans); letter-spacing: -0.045em; }
-  .hero .lede { margin-inline: auto; color: rgba(255, 255, 255, 0.86); font-size: clamp(19px, 2.2vw, 24px); }
-  .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-5); }
+  .hero .lede { margin-inline: auto; font-size: clamp(19px, 2.2vw, 24px); }
+  .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-5); margin-top: var(--space-5); }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .hero-bg { animation: hero-zoom linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
-      .hero-content { animation: hero-lift linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
+      .hero-content { animation: hero-lift linear both; animation-timeline: view(); animation-range: exit 0% exit 80%; }
     }
   }
-  @keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.12); } }
   @keyframes hero-lift { from { transform: none; opacity: 1; } to { transform: translateY(-60px); opacity: 0; } }
 
   /* About */
@@ -120,16 +104,14 @@
 
 <main id="top">
 
-  <header class="hero tone-dark" data-tone="dark">
-    <img class="hero-bg" src="img/london.jpg" alt="London and the River Thames from above" width="2400" height="1600" fetchpriority="high">
-    <div class="hero-scrim"></div>
+  <header class="hero">
     <div class="wrap hero-content stack center">
       <svg class="hero-mark" viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg>
       <h1>Cappelletti</h1>
       <p class="lede">UK Procurement Specialists.</p>
       <div class="hero-ctas">
-        <a class="cap-glass cap-glass-btn cap-glass-btn-tint" href="#contact">Get in touch</a>
-        <a class="cap-glass cap-glass-btn" href="#about">About us</a>
+        <a class="cap-btn cap-btn-primary" href="#contact">Get in touch</a>
+        <a class="cap-link" href="#about">About us</a>
       </div>
     </div>
   </header>

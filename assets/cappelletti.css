@@ -163,7 +163,7 @@
    - corners are concentric: a capsule bar with capsule controls inset evenly inside it;
    - a lit rim and a specular highlight that follows the pointer give it depth;
    - it adapts to what is behind it (.tone-dark over photos and burgundy bands);
-   - the bar compacts when the page scrolls, and a soft scroll-edge fade sits beneath it;
+   - the bar compacts in height when the page scrolls, and a soft scroll-edge fade sits beneath it;
    - with reduced transparency it becomes a solid surface. */
 .tone-dark {
   --glass-fill: rgba(30, 26, 28, 0.32);
@@ -220,22 +220,20 @@
   position: fixed;
   z-index: 20;
   top: calc(env(safe-area-inset-top, 0px) + 12px);
-  left: max(12px, env(safe-area-inset-left, 0px));
-  right: max(12px, env(safe-area-inset-right, 0px));
-  max-width: 1080px;
-  margin: 0 auto;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
   border-radius: 30px;
   color: var(--glass-ink);
-  transition: max-width 0.6s var(--ease-out), border-radius 0.6s var(--ease-out), background-color 0.4s var(--ease-out);
+  transition: border-radius 0.6s var(--ease-out), background-color 0.4s var(--ease-out);
 }
-.cap-nav.is-scrolled { max-width: 760px; border-radius: 26px; }
+.cap-nav.is-scrolled { border-radius: 26px; }
 .cap-nav-inner {
   position: relative;
   height: 60px;
   display: flex;
   align-items: center;
   gap: var(--space-5);
-  padding-inline: 20px 12px;
+  padding-inline: 24px 12px;
   transition: height 0.6s var(--ease-out);
 }
 .cap-nav.is-scrolled .cap-nav-inner { height: 52px; padding-inline: 18px 8px; }
