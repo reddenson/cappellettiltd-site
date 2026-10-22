@@ -39,7 +39,7 @@
 
   /* Hero: the mark and the name on a clean ground, nothing else */
   .hero { text-align: center; padding-block: calc(env(safe-area-inset-top, 0px) + 84px + var(--space-9)) var(--space-6); }
-  .hero-mark { width: clamp(88px, 11vw, 120px); height: auto; color: var(--brand-bright); margin-bottom: var(--space-2); }
+  .hero-mark { width: clamp(56px, 7vw, 76px); height: auto; color: var(--brand-bright); margin-bottom: var(--space-2); }
   .hero h1 { font: 500 clamp(64px, 13vw, 148px)/0.95 var(--font-sans); letter-spacing: -0.045em; }
   .hero .lede { margin-inline: auto; font-size: clamp(19px, 2.2vw, 24px); }
   .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-5); margin-top: var(--space-5); }
@@ -69,7 +69,7 @@
   /* Footer */
   footer { background: var(--surface-alt); color: var(--ink-muted); font-size: 12px; line-height: 1.5; padding-block: var(--space-6); }
   .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); }
-  .foot .cap-logo svg { width: 26px; }
+  .foot .cap-logo svg { width: 16px; }
   .foot .cap-logo span { font-size: 15px; }
   .foot p { margin: 0; }
 
@@ -85,14 +85,14 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <g id="cap-mark" class="cap-mark"><path d="M28 56 A22 22 0 0 1 72 56"/><path d="M10 54 C10 80 90 80 90 54"/><path d="M28 56 C34 64 66 64 72 56"/></g>
+    <g id="cap-mark" class="cap-mark"><path d="M43.6 16.8 Q50 10.4 58.25 14.5 C71.53 22.92 87 40.16 87 50 C87 59.84 71.53 77.08 58.25 85.5 Q50 89.6 43.6 83.2 L10.4 50 Z"/><circle cx="52.5" cy="50" r="15.5"/></g>
   </defs>
 </svg>
 
 <div class="cap-scroll-edge" id="scroll-edge" aria-hidden="true"></div>
 <nav class="cap-nav cap-glass" id="site-nav" aria-label="Main">
   <div class="cap-nav-inner">
-    <a class="cap-logo" href="#top" aria-label="Cappelletti, home"><svg viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></a>
+    <a class="cap-logo" href="#top" aria-label="Cappelletti, home"><svg viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></a>
     <ul class="cap-nav-links">
       <li><a class="cap-nav-item" href="#about">About</a></li>
       <li><a class="cap-nav-item" href="#mission">Mission</a></li>
@@ -106,7 +106,7 @@
 
   <header class="hero">
     <div class="wrap hero-content stack center">
-      <svg class="hero-mark" viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg>
+      <svg class="hero-mark" viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg>
       <h1>Cappelletti</h1>
       <p class="lede">UK Procurement Specialists.</p>
       <div class="hero-ctas">
@@ -172,7 +172,7 @@
 
 <footer>
   <div class="wrap foot">
-    <a class="cap-logo" href="#top" aria-label="Cappelletti, back to top"><svg viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></a>
+    <a class="cap-logo" href="#top" aria-label="Cappelletti, back to top"><svg viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></a>
     <p>Copyright © 2026 Cappelletti. All rights reserved.</p>
   </div>
 </footer>
