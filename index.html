@@ -41,7 +41,7 @@
   .hero {
     position: relative;
     isolation: isolate;
-    overflow: hidden;
+    overflow: clip;
     min-height: clamp(560px, 88svh, 920px);
     text-align: center;
     color: #1d1d1f;
@@ -60,10 +60,24 @@
   .hero .cap-glass-btn { min-height: 44px; padding: 0 22px; font-weight: 400; }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .hero-bg { animation: hero-zoom linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
-      .hero-content { animation: hero-lift linear both; animation-timeline: view(); animation-range: exit 0% exit 80%; }
+      .hero-bg { animation: hero-zoom linear both; animation-timeline: scroll(root); animation-range: 0px 90vh; }
+      .hero-content { animation: hero-lift linear both; animation-timeline: scroll(root); animation-range: 0px 55vh; }
     }
   }
+  /* Vignette: a faint edge shade at rest that closes in to black as the hero scrolls away into About us.
+     The hero sits at the top of the page, so its effects run on the page scroll, measured in screen heights. */
+  .hero-fade { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 40%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.35) 100%); }
+  .hero-fade::before, .hero-fade::after { content: ""; position: absolute; inset: 0; opacity: 0; }
+  .hero-fade::before { background: radial-gradient(70% 55% at 50% 40%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.92) 100%); }
+  .hero-fade::after { background: #000000; }
+  .hero-content { position: relative; z-index: 1; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-fade::before { animation: fade-up linear both; animation-timeline: scroll(root); animation-range: 0px 45vh; }
+      .hero-fade::after { animation: fade-up linear both; animation-timeline: scroll(root); animation-range: 20vh 80vh; }
+    }
+  }
+  @keyframes fade-up { from { opacity: 0; } to { opacity: 1; } }
   @keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
   @keyframes hero-lift { from { transform: none; opacity: 1; } to { transform: translateY(-60px); opacity: 0; } }
 
@@ -107,7 +121,8 @@
         animation-range: cover 15% cover 50%;
       }
       .cap-statement .fill-text { --fill-on: #ffffff; --fill-off: rgba(255, 255, 255, 0.28); }
-      .contact-email .fill-text { --fill-on: var(--brand-bright); --fill-off: var(--hairline); animation-range: entry 40% cover 45%; }
+      /* The email sits near the end of the page, so it fills over the last 320px of scrolling and always completes at the bottom. */
+      .contact-email .fill-text { --fill-on: var(--brand-bright); --fill-off: var(--hairline); animation-timeline: scroll(root); animation-range: calc(100% - 320px) 100%; }
     }
   }
   @keyframes head-in { from { opacity: 0.2; transform: scale(0.9) translateY(24px); } to { opacity: 1; transform: none; } }
@@ -155,6 +170,7 @@
   <header class="hero" data-tone="dark">
     <img class="hero-bg" src="img/london.jpg" alt="London and the River Thames from above" width="2400" height="1600" fetchpriority="high">
     <div class="hero-wash"></div>
+    <div class="hero-fade" aria-hidden="true"></div>
     <div class="wrap hero-content stack center">
       <svg class="hero-mark" viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg>
       <h1>Cappelletti</h1>
