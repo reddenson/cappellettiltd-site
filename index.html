@@ -39,8 +39,9 @@
 
   /* Hero: the mark and the name on a clean ground, nothing else */
   .hero { text-align: center; padding-block: calc(env(safe-area-inset-top, 0px) + 84px + var(--space-9)) var(--space-6); }
-  .hero-mark { width: clamp(56px, 7vw, 76px); height: auto; color: var(--brand-bright); margin-bottom: var(--space-2); }
-  .hero h1 { font: 500 clamp(64px, 13vw, 148px)/0.95 var(--font-sans); letter-spacing: -0.045em; }
+  /* Name alone: the mark always sits to the left of the wordmark, sized from the letters. */
+  .hero h1 { display: inline-flex; align-items: center; gap: 0.2em; font: 500 clamp(44px, 11vw, 140px)/1 var(--font-sans); letter-spacing: -0.045em; }
+  .hero-mark { height: 0.76em; width: auto; flex: none; color: var(--brand-bright); }
   .hero .lede { margin-inline: auto; font-size: clamp(19px, 2.2vw, 24px); }
   .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-5); margin-top: var(--space-5); }
   @supports (animation-timeline: view()) {
@@ -106,8 +107,7 @@
 
   <header class="hero">
     <div class="wrap hero-content stack center">
-      <svg class="hero-mark" viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg>
-      <h1>Cappelletti</h1>
+      <h1><svg class="hero-mark" viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></h1>
       <p class="lede">UK Procurement Specialists.</p>
       <div class="hero-ctas">
         <a class="cap-btn cap-btn-primary" href="#contact">Get in touch</a>
