@@ -16,15 +16,17 @@
   --ink-muted: #6e6a6c;
   --hairline: #d8d2d4;
   --nav-bg: rgba(255, 255, 255, 0.72);
-  --glass-top: rgba(255, 255, 255, 0.66);
-  --glass-bottom: rgba(255, 255, 255, 0.44);
-  --glass-edge: rgba(255, 255, 255, 0.6);
-  --glass-highlight: rgba(255, 255, 255, 0.9);
-  --glass-outline: rgba(29, 10, 16, 0.12);
-  --glass-shadow: rgba(29, 10, 16, 0.12);
+  --glass-fill: rgba(255, 255, 255, 0.46);
+  --glass-rim: rgba(255, 255, 255, 0.9);
+  --glass-outline: rgba(29, 10, 16, 0.1);
+  --glass-shadow: rgba(29, 10, 16, 0.14);
+  --glass-specular: rgba(255, 255, 255, 0.6);
   --glass-chip: rgba(29, 10, 16, 0.05);
   --glass-chip-hover: rgba(29, 10, 16, 0.1);
-  --glass-chip-edge: rgba(29, 10, 16, 0.08);
+  --glass-chip-edge: rgba(29, 10, 16, 0.07);
+  --glass-ink: #1d1d1f;
+  --glass-muted: #6e6a6c;
+  --glass-mark: #8c1d3d;
   --success: #1e7a4c;
   --error: #b3261e;
 
@@ -45,7 +47,6 @@
   --radius-md: 18px;
   --radius-lg: 28px;
   --radius-pill: 980px;
-  --radius-nav: 22px;
 
   --shadow-raised: 0 2px 6px rgba(29, 10, 16, 0.06), 0 12px 32px rgba(29, 10, 16, 0.08);
   --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -65,15 +66,17 @@
     --ink-muted: #a19b9e;
     --hairline: #3a3437;
     --nav-bg: rgba(22, 18, 20, 0.72);
-    --glass-top: rgba(44, 38, 41, 0.62);
-    --glass-bottom: rgba(20, 17, 18, 0.5);
-    --glass-edge: rgba(255, 255, 255, 0.14);
-    --glass-highlight: rgba(255, 255, 255, 0.2);
-    --glass-outline: rgba(0, 0, 0, 0.6);
-    --glass-shadow: rgba(0, 0, 0, 0.45);
-    --glass-chip: rgba(255, 255, 255, 0.1);
-    --glass-chip-hover: rgba(255, 255, 255, 0.18);
-    --glass-chip-edge: rgba(255, 255, 255, 0.14);
+    --glass-fill: rgba(30, 26, 28, 0.32);
+    --glass-rim: rgba(255, 255, 255, 0.34);
+    --glass-outline: rgba(0, 0, 0, 0.3);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+    --glass-specular: rgba(255, 255, 255, 0.24);
+    --glass-chip: rgba(255, 255, 255, 0.12);
+    --glass-chip-hover: rgba(255, 255, 255, 0.2);
+    --glass-chip-edge: rgba(255, 255, 255, 0.16);
+    --glass-ink: #f5f5f7;
+    --glass-muted: rgba(245, 245, 247, 0.7);
+    --glass-mark: #f2b8c8;
     --success: #5fd39a;
     --error: #ff8a80;
     --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
@@ -92,15 +95,17 @@
   --ink-muted: #a19b9e;
   --hairline: #3a3437;
   --nav-bg: rgba(22, 18, 20, 0.72);
-  --glass-top: rgba(44, 38, 41, 0.62);
-  --glass-bottom: rgba(20, 17, 18, 0.5);
-  --glass-edge: rgba(255, 255, 255, 0.14);
-  --glass-highlight: rgba(255, 255, 255, 0.2);
-  --glass-outline: rgba(0, 0, 0, 0.6);
-  --glass-shadow: rgba(0, 0, 0, 0.45);
-  --glass-chip: rgba(255, 255, 255, 0.1);
-  --glass-chip-hover: rgba(255, 255, 255, 0.18);
-  --glass-chip-edge: rgba(255, 255, 255, 0.14);
+  --glass-fill: rgba(30, 26, 28, 0.32);
+  --glass-rim: rgba(255, 255, 255, 0.34);
+  --glass-outline: rgba(0, 0, 0, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --glass-specular: rgba(255, 255, 255, 0.24);
+  --glass-chip: rgba(255, 255, 255, 0.12);
+  --glass-chip-hover: rgba(255, 255, 255, 0.2);
+  --glass-chip-edge: rgba(255, 255, 255, 0.16);
+  --glass-ink: #f5f5f7;
+  --glass-muted: rgba(245, 245, 247, 0.7);
+  --glass-mark: #f2b8c8;
   --success: #5fd39a;
   --error: #ff8a80;
   --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
@@ -153,8 +158,64 @@
 .cap-link:hover::after { transform: translateX(3px); }
 .cap-link-onbrand { color: var(--on-brand); }
 
-/* Global nav: a floating liquid-glass panel with rounded corners. Menu items are buttons at the top of the page;
-   once the page scrolls (.is-scrolled, set by the page) they settle into grey text flush on the glass. */
+/* Liquid glass, after Apple's principles:
+   - glass is for the control layer only (nav, buttons over imagery), never for content;
+   - corners are concentric: a capsule bar with capsule controls inset evenly inside it;
+   - a lit rim and a specular highlight that follows the pointer give it depth;
+   - it adapts to what is behind it (.tone-dark over photos and burgundy bands);
+   - the bar compacts when the page scrolls, and a soft scroll-edge fade sits beneath it;
+   - with reduced transparency it becomes a solid surface. */
+.tone-dark {
+  --glass-fill: rgba(30, 26, 28, 0.32);
+  --glass-rim: rgba(255, 255, 255, 0.34);
+  --glass-outline: rgba(0, 0, 0, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --glass-specular: rgba(255, 255, 255, 0.24);
+  --glass-chip: rgba(255, 255, 255, 0.12);
+  --glass-chip-hover: rgba(255, 255, 255, 0.2);
+  --glass-chip-edge: rgba(255, 255, 255, 0.16);
+  --glass-ink: #f5f5f7;
+  --glass-muted: rgba(245, 245, 247, 0.7);
+  --glass-mark: #f2b8c8;
+}
+
+.cap-glass {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(16px) saturate(190%) brightness(1.04);
+  backdrop-filter: blur(16px) saturate(190%) brightness(1.04);
+  box-shadow: 0 0 0 0.5px var(--glass-outline), 0 10px 30px var(--glass-shadow);
+}
+.cap-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(180px circle at var(--mx, 30%) var(--my, -60%), var(--glass-specular), transparent 70%),
+    linear-gradient(180deg, var(--glass-specular), transparent 46%);
+  opacity: 0.55;
+  transition: opacity 0.4s var(--ease-out);
+}
+.cap-glass:hover::before { opacity: 0.9; }
+.cap-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(140deg, var(--glass-rim), transparent 32%, transparent 68%, var(--glass-rim));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Global nav: a floating capsule. Menu items are glass buttons at the top of the page;
+   once the page scrolls (.is-scrolled, set by the page) the bar compacts and they settle into grey text. */
 .cap-nav {
   position: fixed;
   z-index: 20;
@@ -163,30 +224,67 @@
   right: max(12px, env(safe-area-inset-right, 0px));
   max-width: 1080px;
   margin: 0 auto;
-  border-radius: var(--radius-nav);
-  background: linear-gradient(180deg, var(--glass-top), var(--glass-bottom));
-  -webkit-backdrop-filter: blur(22px) saturate(190%);
-  backdrop-filter: blur(22px) saturate(190%);
-  border: 1px solid var(--glass-edge);
-  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-outline), 0 12px 32px var(--glass-shadow);
-  transition: box-shadow 0.35s var(--ease-out), background 0.35s var(--ease-out);
+  border-radius: 30px;
+  color: var(--glass-ink);
+  transition: max-width 0.6s var(--ease-out), border-radius 0.6s var(--ease-out), background-color 0.4s var(--ease-out);
 }
-.cap-nav::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(120% 140% at 12% -40%, var(--glass-highlight), transparent 55%);
-  opacity: 0.6;
-}
+.cap-nav.is-scrolled { max-width: 760px; border-radius: 26px; }
 .cap-nav-inner {
   position: relative;
   height: 60px;
   display: flex;
   align-items: center;
   gap: var(--space-5);
-  padding-inline: 18px 12px;
+  padding-inline: 20px 12px;
+  transition: height 0.6s var(--ease-out);
+}
+.cap-nav.is-scrolled .cap-nav-inner { height: 52px; padding-inline: 18px 8px; }
+.cap-nav .cap-logo { color: var(--glass-ink); }
+.cap-nav .cap-logo svg { color: var(--glass-mark); }
+
+/* Scroll edge: a soft blur that fades in under the bar once content scrolls beneath it. */
+.cap-scroll-edge {
+  position: fixed;
+  z-index: 19;
+  inset: 0 0 auto;
+  height: calc(env(safe-area-inset-top, 0px) + 96px);
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent);
+  mask-image: linear-gradient(180deg, #000 30%, transparent);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+.cap-scroll-edge.is-on { opacity: 1; }
+
+/* Glass buttons: capsules for use over photography. */
+.cap-glass-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 26px;
+  border-radius: var(--radius-pill);
+  font: 500 17px/1 var(--font-sans);
+  letter-spacing: -0.01em;
+  color: var(--glass-ink);
+  text-decoration: none;
+  transition: transform 0.25s var(--ease-out);
+}
+.cap-glass-btn:hover { transform: scale(1.03); }
+.cap-glass-btn:active { transform: scale(0.98); }
+.cap-glass-btn-tint { --glass-fill: rgba(90, 15, 36, 0.62); --glass-ink: #ffffff; }
+.cap-glass-btn:focus-visible { outline: 3px solid var(--glass-ink); outline-offset: 3px; }
+
+@media (prefers-reduced-transparency: reduce) {
+  .cap-glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface-raised); }
+  .tone-dark.cap-glass { background: #1e1a1c; }
+  .cap-glass-btn-tint { background: var(--brand); }
+  .cap-scroll-edge { display: none; }
+}
+@media (prefers-contrast: more) {
+  .cap-glass { box-shadow: 0 0 0 1.5px var(--glass-ink); }
 }
 /* Logo: the line-drawn cappelletto mark beside the wordmark. The mark is drawn in brand-bright. */
 .cap-logo {
@@ -203,7 +301,7 @@
 .cap-nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   margin: 0 0 0 auto;
   padding: 0;
   list-style: none;
@@ -216,32 +314,30 @@
   border-radius: var(--radius-pill);
   border: 1px solid var(--glass-chip-edge);
   background: var(--glass-chip);
-  box-shadow: inset 0 1px 0 var(--glass-highlight);
   font: 400 14px/1 var(--font-sans);
   letter-spacing: -0.01em;
-  color: var(--ink);
+  color: var(--glass-ink);
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 0.35s var(--ease-out), border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), color 0.35s var(--ease-out), padding 0.35s var(--ease-out);
+  transition: background-color 0.4s var(--ease-out), border-color 0.4s var(--ease-out), color 0.4s var(--ease-out), padding 0.4s var(--ease-out);
 }
 .cap-nav-item:hover { background: var(--glass-chip-hover); }
-.cap-nav-cta { background: var(--action); border-color: transparent; box-shadow: none; color: var(--on-brand); }
+.cap-nav-cta { background: var(--action); border-color: transparent; color: var(--on-brand); }
 .cap-nav-cta:hover { background: var(--action-hover); }
 .cap-nav.is-scrolled .cap-nav-item {
   background: transparent;
   border-color: transparent;
-  box-shadow: none;
-  color: var(--ink-muted);
+  color: var(--glass-muted);
   padding: 0 10px;
 }
-.cap-nav.is-scrolled .cap-nav-item:hover { color: var(--ink); }
+.cap-nav.is-scrolled .cap-nav-item:hover { color: var(--glass-ink); }
 .cap-nav-item:focus-visible { outline: 3px solid var(--brand-bright); outline-offset: 2px; }
 @media (max-width: 720px) {
   .cap-nav-links li:not(:last-child) { display: none; }
   .cap-logo span { font-size: 17px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cap-nav, .cap-nav-item { transition: none; }
+  .cap-nav, .cap-nav-inner, .cap-nav-item, .cap-glass::before, .cap-glass-btn, .cap-scroll-edge { transition: none; }
 }
 
 /* Eyebrow: the small burgundy line above a headline. */

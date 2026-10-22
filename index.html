@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="assets/cappelletti.css">
 <style>
   /* Layout: a short Apple-style scroll. One centred column for words, full-bleed hero photo and mission band. */
-  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 100px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
     margin: 0;
@@ -37,29 +37,34 @@
   .stack { display: flex; flex-direction: column; gap: var(--space-4); }
   .center { text-align: center; align-items: center; }
 
-  /* Hero */
-  .hero { padding-block: calc(env(safe-area-inset-top, 0px) + 72px + var(--space-8)) 0; text-align: center; }
-  .hero-mark { width: clamp(88px, 12vw, 128px); height: auto; color: var(--brand-bright); margin-bottom: var(--space-3); }
-  .hero h1 { font: 500 clamp(56px, 11vw, 120px)/1 var(--font-sans); letter-spacing: -0.04em; }
-  .hero .lede { margin-inline: auto; }
-  .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-5); margin-top: var(--space-4); }
-  .hero-media { margin-top: var(--space-8); }
-  .hero-media img {
-    display: block;
-    width: 100%;
-    height: clamp(320px, 58vw, 720px);
-    object-fit: cover;
-    clip-path: inset(0 max(16px, 6vw) round var(--radius-lg));
+  /* Hero: full-bleed photo, glass controls on top */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: clamp(560px, 92svh, 940px);
+    display: flex;
+    align-items: flex-end;
+    text-align: center;
+    color: #ffffff;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 120px) var(--space-9);
+    box-sizing: border-box;
   }
+  .hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .hero-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(12, 4, 7, 0.4) 0%, rgba(12, 4, 7, 0.08) 38%, rgba(12, 4, 7, 0.66) 100%); }
+  .hero-content { width: 100%; }
+  .hero-mark { width: clamp(80px, 10vw, 112px); height: auto; color: #ffffff; margin-bottom: var(--space-2); }
+  .hero h1 { font: 500 clamp(64px, 13vw, 148px)/0.95 var(--font-sans); letter-spacing: -0.045em; }
+  .hero .lede { margin-inline: auto; color: rgba(255, 255, 255, 0.86); font-size: clamp(19px, 2.2vw, 24px); }
+  .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-5); }
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .hero-media img { animation: hero-open linear both; animation-timeline: view(); animation-range: cover 30% cover 60%; }
+      .hero-bg { animation: hero-zoom linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+      .hero-content { animation: hero-lift linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
     }
   }
-  @keyframes hero-open {
-    from { clip-path: inset(0 max(16px, 6vw) round var(--radius-lg)); }
-    to { clip-path: inset(0 0 round 0); }
-  }
+  @keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.12); } }
+  @keyframes hero-lift { from { transform: none; opacity: 1; } to { transform: translateY(-60px); opacity: 0; } }
 
   /* About */
   .about-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--space-8); align-items: center; }
@@ -100,7 +105,8 @@
   </defs>
 </svg>
 
-<nav class="cap-nav" id="site-nav" aria-label="Main">
+<div class="cap-scroll-edge" id="scroll-edge" aria-hidden="true"></div>
+<nav class="cap-nav cap-glass" id="site-nav" aria-label="Main">
   <div class="cap-nav-inner">
     <a class="cap-logo" href="#top" aria-label="Cappelletti, home"><svg viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></a>
     <ul class="cap-nav-links">
@@ -114,18 +120,17 @@
 
 <main id="top">
 
-  <header class="hero">
-    <div class="wrap stack center">
+  <header class="hero tone-dark" data-tone="dark">
+    <img class="hero-bg" src="img/london.jpg" alt="London and the River Thames from above" width="2400" height="1600" fetchpriority="high">
+    <div class="hero-scrim"></div>
+    <div class="wrap hero-content stack center">
       <svg class="hero-mark" viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg>
       <h1>Cappelletti</h1>
       <p class="lede">UK Procurement Specialists.</p>
       <div class="hero-ctas">
-        <a class="cap-btn cap-btn-primary" href="#contact">Get in touch</a>
-        <a class="cap-link" href="#about">About us</a>
+        <a class="cap-glass cap-glass-btn cap-glass-btn-tint" href="#contact">Get in touch</a>
+        <a class="cap-glass cap-glass-btn" href="#about">About us</a>
       </div>
-    </div>
-    <div class="hero-media">
-      <img src="img/london.jpg" alt="The River Thames winding through London at dusk" width="2400" height="1600" fetchpriority="high">
     </div>
   </header>
 
@@ -142,7 +147,7 @@
     </div>
   </section>
 
-  <div class="cap-statement" id="mission">
+  <div class="cap-statement" id="mission" data-tone="dark">
     <div class="cap-statement-inner">
       <p class="cap-eyebrow">Our mission</p>
       <blockquote class="cap-reveal">To make buying simpler, clearer and better value for the organisations we work with.</blockquote>
@@ -192,9 +197,35 @@
 
 <script>
   (function () {
-    var nav = document.getElementById('site-nav'), ticking = false;
-    function update() { nav.classList.toggle('is-scrolled', window.scrollY > 24); ticking = false; }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    var nav = document.getElementById('site-nav'), edge = document.getElementById('scroll-edge'), ticking = false;
+    var darkTheme = window.matchMedia('(prefers-color-scheme: dark)');
+    function toneAt(y) {
+      var els = document.elementsFromPoint(window.innerWidth / 2, y);
+      for (var i = 0; i < els.length; i++) {
+        if (nav.contains(els[i]) || edge === els[i]) continue;
+        var t = els[i].closest('[data-tone]');
+        return t ? t.getAttribute('data-tone') : 'light';
+      }
+      return 'light';
+    }
+    function update() {
+      var scrolled = window.scrollY > 24;
+      nav.classList.toggle('is-scrolled', scrolled);
+      edge.classList.toggle('is-on', scrolled);
+      var r = nav.getBoundingClientRect();
+      nav.classList.toggle('tone-dark', toneAt(r.top + r.height / 2) === 'dark');
+      ticking = false;
+    }
+    function queue() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    if (darkTheme.addEventListener) darkTheme.addEventListener('change', queue);
+    nav.addEventListener('pointermove', function (e) {
+      var r = nav.getBoundingClientRect();
+      nav.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      nav.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+    nav.addEventListener('pointerleave', function () { nav.style.removeProperty('--mx'); nav.style.removeProperty('--my'); });
     update();
   })();
 </script>
