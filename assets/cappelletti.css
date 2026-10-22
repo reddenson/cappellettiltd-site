@@ -145,14 +145,18 @@
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.cap-wordmark {
-  font: 500 19px/1 var(--font-sans);
-  letter-spacing: -0.02em;
+/* Logo: the line-drawn cappelletto mark beside the wordmark. The mark is drawn in brand-bright. */
+.cap-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
 }
-.cap-wordmark span { color: var(--brand-bright); }
+.cap-logo svg { width: 34px; height: auto; flex: none; color: var(--brand-bright); }
+.cap-logo span { font: 500 19px/1 var(--font-sans); letter-spacing: -0.02em; }
+.cap-mark { fill: none; stroke: currentColor; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
 .cap-nav-links {
   display: flex;
   gap: var(--space-5);
