@@ -1,46 +1,436 @@
 <!doctype html>
 <html lang="en-GB">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cappelletti Ltd</title>
-  <meta name="description" content="Cappelletti Ltd. UK Procurement Specialists.">
-  <meta name="theme-color" content="#5a0f24">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%235a0f24'/%3E%3Ctext x='32' y='44' font-family='Helvetica Neue,Helvetica,Arial,sans-serif' font-size='36' font-weight='700' fill='%23fff' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
-  <style>
-    html, body { height: 100%; margin: 0; }
-    body {
-      background: #5a0f24;
-      color: #fff;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 16px;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cappelletti Ltd</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cappelletti Ltd. UK Procurement Specialists. Secure camera systems sourced from Taiwan, electronics and operational supplies for UK public services.">
+<meta name="theme-color" content="#5a0f24">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%235a0f24'/%3E%3Ctext x='32' y='44' font-family='Helvetica Neue,Helvetica,Arial,sans-serif' font-size='36' font-weight='700' fill='%23fff' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/cappelletti.css">
+<style>
+  /* Layout: Apple-style long scroll. Centred 980px column for words, full-bleed bands for images and statements. */
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--ink);
+    font: 400 17px/1.47 var(--font-sans);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--nav-bg); }
+  img { max-width: 100%; }
+  .wrap {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+  }
+  section { padding-block: var(--space-10); }
+  h1, h2 { margin: 0; text-wrap: balance; }
+  .h-section { font: 500 clamp(40px, 6vw, 64px)/1.05 var(--font-sans); letter-spacing: -0.03em; }
+  .lede { font: 400 clamp(19px, 2vw, 21px)/1.45 var(--font-sans); color: var(--ink-muted); margin: 0; max-width: 40ch; }
+  .stack { display: flex; flex-direction: column; gap: var(--space-4); }
+  .center { text-align: center; align-items: center; }
+  .center .lede { margin-inline: auto; }
+
+  /* Hero */
+  .hero { padding-block: var(--space-9) 0; text-align: center; }
+  .hero h1 { font: 500 clamp(48px, 9vw, 96px)/1 var(--font-sans); letter-spacing: -0.035em; }
+  .hero .lede { margin-inline: auto; max-width: 36ch; }
+  .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-5); margin-top: var(--space-3); }
+  .hero-media { margin-top: var(--space-8); }
+  .hero-media img {
+    display: block;
+    width: 100%;
+    height: clamp(320px, 62vw, 760px);
+    object-fit: cover;
+    clip-path: inset(0 max(16px, 6vw) round var(--radius-lg));
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-media img { animation: hero-open linear both; animation-timeline: view(); animation-range: cover 30% cover 60%; }
     }
-    h1 {
-      margin: 0;
-      font-weight: 500;
-      font-size: clamp(2.2rem, 7vw, 5rem);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+  }
+  @keyframes hero-open {
+    from { clip-path: inset(0 max(16px, 6vw) round var(--radius-lg)); }
+    to { clip-path: inset(0 0 round 0); }
+  }
+
+  /* Highlight statement: words fill from muted to ink as you read down */
+  .highlight { padding-block: var(--space-10); }
+  .highlight p { margin: 0 auto; max-width: 900px; font: 500 clamp(30px, 4.6vw, 48px)/1.18 var(--font-sans); letter-spacing: -0.025em; color: var(--ink); }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .highlight p span {
+        color: transparent;
+        background-image: linear-gradient(90deg, var(--ink) 50%, var(--hairline) 50%);
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: fill-text linear both;
+        animation-timeline: view();
+        animation-range: cover 15% cover 55%;
+      }
     }
-    p {
-      margin: 1.25rem 0 0;
-      font-weight: 300;
-      font-size: clamp(1rem, 2.4vw, 1.4rem);
-      letter-spacing: 0.04em;
-      opacity: 0.85;
+  }
+  @keyframes fill-text { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+  /* About */
+  .about { background: var(--surface-alt); }
+  .about-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--space-8); align-items: center; }
+  .about-grid > * { min-width: 0; }
+  .about-copy p { margin: 0; color: var(--ink-muted); max-width: 52ch; }
+  .about-copy p strong { color: var(--ink); font-weight: 500; }
+  .about-media { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 5; }
+  .about-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: var(--space-5) 0 0; padding: var(--space-5) 0 0; border-top: 1px solid var(--hairline); }
+  .facts div { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+  .facts dt { font: 400 13px/1.3 var(--font-sans); color: var(--ink-muted); }
+  .facts dd { margin: 0; font: 500 19px/1.25 var(--font-sans); color: var(--ink); }
+
+  /* Supply tiles */
+  .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin-top: var(--space-8); }
+  .tiles .wide { grid-column: 1 / -1; }
+  .tiles .wide .cap-tile-media { aspect-ratio: 21 / 9; }
+
+  /* Process: sticky photo beside a real four-step sequence */
+  .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); margin-top: var(--space-8); }
+  .process-grid > * { min-width: 0; }
+  .process-media { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); align-self: start; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 5; }
+  .process-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-9); padding-block: var(--space-8); }
+  .steps li { display: flex; flex-direction: column; gap: var(--space-3); }
+  .step-no { font: 500 15px/1 var(--font-sans); color: var(--brand-bright); font-variant-numeric: tabular-nums; }
+  .steps h3 { margin: 0; font: 500 clamp(28px, 3.2vw, 36px)/1.1 var(--font-sans); letter-spacing: -0.02em; }
+  .steps p { margin: 0; color: var(--ink-muted); max-width: 38ch; font-size: 19px; }
+
+  /* Values */
+  .values-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); margin-top: var(--space-8); }
+
+  /* Taiwan band */
+  .band { position: relative; overflow: hidden; color: #ffffff; padding: 0; }
+  .band img { position: absolute; inset: -12% 0; width: 100%; height: 124%; object-fit: cover; display: block; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .band img { animation: drift linear both; animation-timeline: view(); }
     }
-  </style>
+  }
+  @keyframes drift { from { transform: translateY(-6%); } to { transform: translateY(6%); } }
+  .band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 4, 9, 0.15) 0%, rgba(20, 4, 9, 0.78) 100%); }
+  .band .wrap { position: relative; z-index: 1; min-height: clamp(460px, 60vw, 680px); display: flex; flex-direction: column; justify-content: flex-end; gap: var(--space-4); padding-block: var(--space-9); }
+  .band .cap-eyebrow { color: #f2b8c8; }
+  .band .lede { color: rgba(255, 255, 255, 0.85); }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-8); margin-top: var(--space-8); align-items: start; }
+  .contact-grid > * { min-width: 0; }
+  .contact-media { border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 3 / 2; margin-bottom: var(--space-5); }
+  .contact-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .details { display: flex; flex-direction: column; gap: var(--space-4); margin: 0; }
+  .details div { display: flex; flex-direction: column; gap: 2px; padding-bottom: var(--space-4); border-bottom: 1px solid var(--hairline); }
+  .details dt { font: 400 13px/1.3 var(--font-sans); color: var(--ink-muted); }
+  .details dd { margin: 0; font: 400 17px/1.4 var(--font-sans); overflow-wrap: anywhere; }
+  .form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5) var(--space-4); padding: var(--space-6); border-radius: var(--radius-lg); background: var(--surface-alt); }
+  .form .full { grid-column: 1 / -1; }
+  .form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .form-note { font: 400 13px/1.4 var(--font-sans); color: var(--ink-muted); margin: 0; flex: 1 1 200px; }
+  .form-status { grid-column: 1 / -1; margin: 0; padding: var(--space-4); border-radius: var(--radius-sm); background: var(--surface-raised); color: var(--success); font-size: 15px; }
+
+  /* Footer */
+  footer { background: var(--surface-alt); color: var(--ink-muted); font-size: 12px; line-height: 1.5; padding-block: var(--space-7) var(--space-6); }
+  .foot-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); padding-bottom: var(--space-5); border-bottom: 1px solid var(--hairline); }
+  .foot-cols h4 { margin: 0 0 var(--space-2); font: 500 12px/1.4 var(--font-sans); color: var(--ink); }
+  .foot-cols ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .foot-cols a { color: var(--ink-muted); text-decoration: none; }
+  .foot-cols a:hover { color: var(--ink); text-decoration: underline; }
+  .foot-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); padding-top: var(--space-4); }
+  .foot-legal p { margin: 0; }
+
+  @media (max-width: 820px) {
+    section { padding-block: var(--space-9); }
+    .about-grid, .process-grid, .contact-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    .about-media { aspect-ratio: 4 / 3; }
+    .process-media { position: relative; top: 0; aspect-ratio: 16 / 10; }
+    .steps { gap: var(--space-7); padding-block: 0; }
+    .tiles, .values-grid { grid-template-columns: 1fr; }
+    .tiles .wide .cap-tile-media { aspect-ratio: 16 / 10; }
+  }
+  @media (max-width: 520px) {
+    .form { grid-template-columns: 1fr; padding: var(--space-5); }
+    .facts { grid-template-columns: 1fr; }
+    .foot-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
 </head>
 <body>
-  <main>
-    <h1>Cappelletti is Cooking</h1>
-    <p>UK Procurement Specialists.</p>
-  </main>
+
+<nav class="cap-nav" aria-label="Main">
+  <div class="cap-nav-inner">
+    <a class="cap-wordmark" href="#top">Cappelletti</a>
+    <ul class="cap-nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#supply">What we supply</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#values">Values</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="cap-btn cap-btn-primary cap-btn-sm" href="#contact">Get in touch</a>
+  </div>
+</nav>
+
+<main id="top">
+
+  <header class="hero">
+    <div class="wrap stack center">
+      <p class="cap-eyebrow">UK Procurement Specialists</p>
+      <h1>Cappelletti is Cooking.</h1>
+      <p class="lede">We source, test and deliver the equipment UK public services depend on, from secure camera systems to everyday operational supplies.</p>
+      <div class="hero-ctas">
+        <a class="cap-btn cap-btn-primary" href="#contact">Talk to us</a>
+        <a class="cap-link" href="#supply">See what we supply</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="img/london.jpg" alt="The River Thames winding through London at dusk, with Tower Bridge in the foreground" width="2400" height="1600" fetchpriority="high">
+    </div>
+  </header>
+
+  <div class="highlight">
+    <div class="wrap">
+      <p><span>Public buyers need suppliers who answer the phone, know the specification and deliver what they promised. That is the whole job, and we take it seriously.</span></p>
+    </div>
+  </div>
+
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-copy stack cap-reveal">
+        <p class="cap-eyebrow">About us</p>
+        <h2 class="h-section">A small team that knows public procurement.</h2>
+        <p><strong>Cappelletti Ltd is a UK company set up in 2026 to supply councils, police forces, NHS trusts, schools and housing providers.</strong> We bid for work through Find a Tender and Contracts Finder, and we take direct requests for quotes.</p>
+        <p>We are deliberately small. You deal with the people who source your order, and the same people stay with the contract until the last delivery is signed for.</p>
+        <dl class="facts">
+          <div><dt>Founded</dt><dd>2026</dd></div>
+          <div><dt>Based in</dt><dd>United Kingdom</dd></div>
+          <div><dt>Company number</dt><dd><span class="cap-tbc">To confirm</span></dd></div>
+        </dl>
+      </div>
+      <div class="about-media cap-reveal">
+        <img src="img/meeting.jpg" alt="Colleagues taking notes around a meeting table" width="1600" height="1067" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="supply">
+    <div class="wrap">
+      <div class="stack center">
+        <p class="cap-eyebrow">What we supply</p>
+        <h2 class="h-section">Equipment you can stand behind.</h2>
+        <p class="lede">Four lines of work, one point of contact.</p>
+      </div>
+      <div class="tiles">
+        <article class="cap-tile cap-tile-dark wide cap-reveal">
+          <div class="cap-tile-body">
+            <p class="cap-eyebrow">Security and cameras</p>
+            <h3>Sourced from Taiwan. Every time.</h3>
+            <p>CCTV, body-worn and dash cameras, recorders and access control, all from vetted Taiwanese manufacturers.</p>
+            <a class="cap-link cap-link-onbrand" href="#contact">Ask about security products</a>
+          </div>
+          <div class="cap-tile-media"><img src="img/cctv.jpg" alt="Rows of identical security cameras mounted on a dark wall" width="1600" height="1076" loading="lazy"></div>
+        </article>
+        <article class="cap-tile cap-reveal">
+          <div class="cap-tile-body">
+            <p class="cap-eyebrow">Electronics</p>
+            <h3>Tested before it ships.</h3>
+            <p>Displays, sensors, networking and accessories, checked against your specification before dispatch.</p>
+          </div>
+          <div class="cap-tile-media"><img src="img/circuit.jpg" alt="Close-up of a printed circuit board" width="1600" height="1067" loading="lazy"></div>
+        </article>
+        <article class="cap-tile cap-reveal">
+          <div class="cap-tile-body">
+            <p class="cap-eyebrow">Operational supplies</p>
+            <h3>The everyday essentials.</h3>
+            <p>Bins, uniforms and workwear, de-icing salt and the other supplies that keep services running.</p>
+          </div>
+          <div class="cap-tile-media"><img src="img/warehouse.jpg" alt="Tall warehouse shelving stacked with boxed stock" width="1600" height="2133" loading="lazy"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="stack center">
+        <p class="cap-eyebrow">How we work</p>
+        <h2 class="h-section" id="process-title">From tender to doorstep.</h2>
+        <p class="lede">We manage freight, customs and UK delivery, so you get one invoice and one person to call.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-media">
+          <img src="img/port.jpg" alt="A container ship being loaded beneath dockside cranes" width="1800" height="1200" loading="lazy">
+        </div>
+        <ol class="steps">
+          <li class="cap-reveal"><span class="step-no">01</span><h3>Read the specification</h3><p>We go through every requirement before we bid, and we ask our questions early.</p></li>
+          <li class="cap-reveal"><span class="step-no">02</span><h3>Source and sample</h3><p>We shortlist manufacturers, test samples and fix the price before we commit to anything.</p></li>
+          <li class="cap-reveal"><span class="step-no">03</span><h3>Bid and agree</h3><p>A clear, compliant bid with a fixed price and a delivery plan you can hold us to.</p></li>
+          <li class="cap-reveal"><span class="step-no">04</span><h3>Deliver and support</h3><p>Tracked delivery, documented warranties and a named contact for the life of the contract.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="cap-statement" id="mission">
+    <div class="cap-statement-inner">
+      <p class="cap-eyebrow">Our mission</p>
+      <blockquote class="cap-reveal">To make public money go further by putting reliable, secure equipment in the hands of the people who serve the UK.</blockquote>
+      <a class="cap-link cap-link-onbrand" href="#values">Read our values</a>
+    </div>
+  </div>
+
+  <section id="values">
+    <div class="wrap">
+      <div class="stack center">
+        <p class="cap-eyebrow">Our values</p>
+        <h2 class="h-section">What we stand for.</h2>
+      </div>
+      <div class="values-grid">
+        <article class="cap-value cap-reveal">
+          <h3>Secure by origin</h3>
+          <p>We know where every security product comes from. Our cameras and recorders are made in Taiwan, and we can show you the paperwork.</p>
+        </article>
+        <article class="cap-value cap-reveal">
+          <h3>Straight answers</h3>
+          <p>If we cannot meet a requirement, we tell you before the bid, not after the award.</p>
+        </article>
+        <article class="cap-value cap-reveal">
+          <h3>Value that lasts</h3>
+          <p>The cheapest unit is rarely the best value. We price for the whole working life of the equipment.</p>
+        </article>
+        <article class="cap-value cap-reveal">
+          <h3>Delivered as promised</h3>
+          <p>The dates and quantities in our bids are commitments. We track every order until it is signed for.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="taiwan-title">
+    <img src="img/taipei.jpg" alt="Taipei at sunset, with Taipei 101 rising above the city" width="2400" height="1297" loading="lazy">
+    <div class="wrap">
+      <p class="cap-eyebrow">Why Taiwan</p>
+      <h2 class="h-section" id="taiwan-title">Trusted hardware from a trusted partner.</h2>
+      <p class="lede">Taiwan builds some of the world's best imaging and networking hardware. Sourcing all our security products there gives buyers a clear, documented supply chain.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="stack center">
+        <p class="cap-eyebrow">Contact us</p>
+        <h2 class="h-section">Let's talk.</h2>
+        <p class="lede">Tell us what you need, or send us a tender you are looking at. We reply within one working day.</p>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <div class="contact-media"><img src="img/handshake.jpg" alt="Two people shaking hands across a desk" width="1600" height="1068" loading="lazy"></div>
+          <dl class="details">
+            <div><dt>Email</dt><dd>hello@cappellettiltd.com <span class="cap-tbc">To confirm</span></dd></div>
+            <div><dt>Phone</dt><dd><span class="cap-tbc">To confirm</span></dd></div>
+            <div><dt>Registered office</dt><dd><span class="cap-tbc">To confirm</span></dd></div>
+          </dl>
+        </div>
+        <form class="form" id="contact-form" novalidate>
+          <div class="cap-field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" autocomplete="name" required>
+          </div>
+          <div class="cap-field">
+            <label for="f-org">Organisation</label>
+            <input id="f-org" name="organisation" autocomplete="organization">
+          </div>
+          <div class="cap-field full">
+            <label for="f-email">Work email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+            <span class="cap-field-hint" id="f-email-hint">We only use this to reply to you.</span>
+          </div>
+          <div class="cap-field full">
+            <label for="f-type">What is it about?</label>
+            <select id="f-type" name="type">
+              <option>Request a quote</option>
+              <option>A tender or framework</option>
+              <option>Becoming a supplier</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="cap-field full">
+            <label for="f-msg">Message</label>
+            <textarea id="f-msg" name="message" placeholder="Product, quantity, delivery date, tender reference..."></textarea>
+          </div>
+          <div class="form-foot full">
+            <button class="cap-btn cap-btn-primary" type="submit">Send message</button>
+            <p class="form-note">This preview does not send messages yet.</p>
+          </div>
+          <p class="form-status" id="form-status" role="status" hidden></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-cols">
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="#about">About us</a></li><li><a href="#mission">Mission</a></li><li><a href="#values">Values</a></li></ul>
+      </div>
+      <div>
+        <h4>What we supply</h4>
+        <ul><li><a href="#supply">Security and cameras</a></li><li><a href="#supply">Electronics</a></li><li><a href="#supply">Operational supplies</a></li></ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul><li><a href="#contact">Send a message</a></li><li>hello@cappellettiltd.com</li></ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <p>Copyright © 2026 Cappelletti Ltd. All rights reserved.</p>
+      <p>Cappelletti Ltd is a private company limited by shares. Company number <span class="cap-tbc">to confirm</span>.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('contact-form');
+    var status = document.getElementById('form-status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = form.elements.name, email = form.elements.email;
+      var emailField = email.closest('.cap-field'), hint = document.getElementById('f-email-hint');
+      var ok = true;
+      if (!name.value.trim()) { name.focus(); ok = false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        emailField.classList.add('cap-field-error');
+        hint.textContent = 'Enter an email address like name@council.gov.uk.';
+        if (ok) email.focus();
+        ok = false;
+      } else {
+        emailField.classList.remove('cap-field-error');
+        hint.textContent = 'We only use this to reply to you.';
+      }
+      if (!ok) return;
+      status.textContent = 'Thanks, ' + name.value.trim().split(' ')[0] + '. This is a preview, so your message has not been sent.';
+      status.hidden = false;
+    });
+  })();
+</script>
 </body>
 </html>

@@ -1,0 +1,328 @@
+/* Cappelletti design system: tokens and components.
+   Same names as the design system's tokens.json, so pages and previews share one vocabulary. */
+
+:root {
+  --brand: #5a0f24;
+  --brand-deep: #3d0a18;
+  --brand-bright: #8c1d3d;
+  --tint: #f4e9ec;
+  --action: #5a0f24;
+  --action-hover: #420a1a;
+  --on-brand: #ffffff;
+  --surface: #ffffff;
+  --surface-alt: #f5f3f4;
+  --surface-raised: #ffffff;
+  --ink: #1d1d1f;
+  --ink-muted: #6e6a6c;
+  --hairline: #d8d2d4;
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --success: #1e7a4c;
+  --error: #b3261e;
+
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 140px;
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 980px;
+
+  --shadow-raised: 0 2px 6px rgba(29, 10, 16, 0.06), 0 12px 32px rgba(29, 10, 16, 0.08);
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --brand-bright: #e0849d;
+    --tint: #2b1119;
+    --action: #9b2445;
+    --action-hover: #b02c51;
+    --surface: #000000;
+    --surface-alt: #141112;
+    --surface-raised: #1e1a1c;
+    --ink: #f5f5f7;
+    --ink-muted: #a19b9e;
+    --hairline: #3a3437;
+    --nav-bg: rgba(22, 18, 20, 0.72);
+    --success: #5fd39a;
+    --error: #ff8a80;
+    --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --brand-bright: #e0849d;
+  --tint: #2b1119;
+  --action: #9b2445;
+  --action-hover: #b02c51;
+  --surface: #000000;
+  --surface-alt: #141112;
+  --surface-raised: #1e1a1c;
+  --ink: #f5f5f7;
+  --ink-muted: #a19b9e;
+  --hairline: #3a3437;
+  --nav-bg: rgba(22, 18, 20, 0.72);
+  --success: #5fd39a;
+  --error: #ff8a80;
+  --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+/* ---------- Components ---------- */
+
+/* Button: pill shapes, verb-first labels. */
+.cap-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font: 400 17px/1 var(--font-sans);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.cap-btn-primary { background: var(--action); color: var(--on-brand); }
+.cap-btn-primary:hover { background: var(--action-hover); }
+.cap-btn-secondary { background: transparent; color: var(--brand-bright); border-color: var(--brand-bright); }
+.cap-btn-secondary:hover { background: var(--brand-bright); color: var(--surface); }
+.cap-btn-onbrand { background: var(--on-brand); color: var(--brand); }
+.cap-btn-onbrand:hover { background: var(--tint); }
+.cap-btn-sm { min-height: 30px; padding: 0 14px; font-size: 14px; }
+.cap-btn:focus-visible,
+.cap-link:focus-visible,
+.cap-field input:focus-visible,
+.cap-field select:focus-visible,
+.cap-field textarea:focus-visible {
+  outline: 3px solid var(--brand-bright);
+  outline-offset: 3px;
+}
+
+/* Link with chevron, Apple's "Learn more >" pattern. */
+.cap-link {
+  color: var(--brand-bright);
+  font: 400 17px/1.4 var(--font-sans);
+  text-decoration: none;
+  border-radius: 4px;
+}
+.cap-link::after { content: " \203A"; display: inline-block; transition: transform 0.2s var(--ease-out); }
+.cap-link:hover { text-decoration: underline; }
+.cap-link:hover::after { transform: translateX(3px); }
+.cap-link-onbrand { color: var(--on-brand); }
+
+/* Global nav: translucent, sticky, 52px tall. */
+.cap-nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--hairline);
+}
+.cap-nav-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.cap-wordmark {
+  font: 500 19px/1 var(--font-sans);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.cap-wordmark span { color: var(--brand-bright); }
+.cap-nav-links {
+  display: flex;
+  gap: var(--space-5);
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.cap-nav-links a {
+  font: 400 13px/1 var(--font-sans);
+  color: var(--ink);
+  opacity: 0.8;
+  text-decoration: none;
+}
+.cap-nav-links a:hover { opacity: 1; }
+@media (max-width: 720px) {
+  .cap-nav-links { display: none; }
+  .cap-nav-inner .cap-btn { margin-left: auto; }
+}
+
+/* Eyebrow: the small burgundy line above a headline. */
+.cap-eyebrow {
+  font: 500 17px/1.3 var(--font-sans);
+  color: var(--brand-bright);
+  letter-spacing: 0;
+  margin: 0;
+}
+
+/* Tile: a big rounded panel with an image, for products and services. */
+.cap-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface-alt);
+  color: var(--ink);
+}
+.cap-tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-6) var(--space-6);
+  text-align: center;
+  align-items: center;
+}
+.cap-tile h3 {
+  margin: 0;
+  font: 500 clamp(28px, 3.4vw, 40px)/1.1 var(--font-sans);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.cap-tile p {
+  margin: 0;
+  max-width: 34ch;
+  font: 400 17px/1.47 var(--font-sans);
+  color: var(--ink-muted);
+}
+.cap-tile-media {
+  margin-top: auto;
+  aspect-ratio: 16 / 10;
+  max-width: 100%;
+  overflow: hidden;
+}
+.cap-tile-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s var(--ease-out);
+}
+.cap-tile:hover .cap-tile-media img { transform: scale(1.04); }
+.cap-tile-dark { background: var(--brand-deep); color: var(--on-brand); }
+.cap-tile-dark p { color: rgba(255, 255, 255, 0.78); }
+.cap-tile-dark .cap-eyebrow { color: #f2b8c8; }
+
+/* Value card: a headline and two sentences, no image. */
+.cap-value {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-raised);
+}
+.cap-value h3 { margin: 0; font: 500 24px/1.2 var(--font-sans); letter-spacing: -0.015em; color: var(--ink); }
+.cap-value p { margin: 0; font: 400 17px/1.47 var(--font-sans); color: var(--ink-muted); }
+.cap-value-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--tint);
+  color: var(--brand-bright);
+  display: grid;
+  place-items: center;
+  font: 500 15px/1 var(--font-sans);
+}
+
+/* Statement band: full-width burgundy with one large sentence. */
+.cap-statement {
+  background: var(--brand);
+  color: var(--on-brand);
+  text-align: center;
+}
+.cap-statement-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-block: var(--space-10);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  align-items: center;
+}
+.cap-statement .cap-eyebrow { color: #f2b8c8; }
+.cap-statement blockquote {
+  margin: 0;
+  font: 500 clamp(32px, 5.2vw, 56px)/1.1 var(--font-sans);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+/* Text field: label above, 12px radius box. */
+.cap-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.cap-field label { font: 500 14px/1.3 var(--font-sans); color: var(--ink); }
+.cap-field input,
+.cap-field select,
+.cap-field textarea {
+  font: 400 17px/1.4 var(--font-sans);
+  color: var(--ink);
+  background: var(--surface-raised);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s var(--ease-out);
+}
+.cap-field textarea { min-height: 140px; resize: vertical; }
+.cap-field input:hover,
+.cap-field select:hover,
+.cap-field textarea:hover { border-color: var(--ink-muted); }
+.cap-field-hint { font: 400 13px/1.4 var(--font-sans); color: var(--ink-muted); }
+.cap-field-error .cap-field-hint { color: var(--error); }
+.cap-field-error input { border-color: var(--error); }
+
+/* Placeholder marker for strawman copy that still needs a real value. */
+.cap-tbc {
+  font: inherit;
+  color: var(--brand-bright);
+  background: var(--tint);
+  border-radius: 6px;
+  padding: 0 6px;
+}
+
+/* Reveal on scroll: content is visible at rest; supporting browsers ease it in as it enters view. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cap-reveal {
+      animation: cap-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+  }
+}
+@keyframes cap-rise {
+  from { opacity: 0.15; transform: translateY(48px); }
+  to { opacity: 1; transform: none; }
+}
