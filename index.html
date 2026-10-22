@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cappelletti</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Cappelletti. UK Procurement Specialists.">
+<meta name="description" content="Cappelletti. UK Procurement Specialists">
 <meta name="theme-color" content="#5a0f24">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/cappelletti.css">
@@ -48,12 +48,12 @@
     padding-block: calc(env(safe-area-inset-top, 0px) + 84px + var(--space-8)) var(--space-8);
     box-sizing: border-box;
   }
-  .hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
-  .hero-wash { position: absolute; inset: 0; z-index: -1; background: radial-gradient(62% 62% at 50% 38%, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0) 76%), linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%); }
+  .hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: grayscale(1) contrast(1.05); }
+  .hero-wash { position: absolute; inset: 0; z-index: -1; background: radial-gradient(58% 58% at 50% 38%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0) 80%), linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 55%); }
   /* Name alone: the mark always sits to the left of the wordmark, sized from the letters. */
   .hero h1 { display: inline-flex; align-items: center; gap: 0.2em; font: 500 clamp(44px, 11vw, 140px)/1 var(--font-sans); letter-spacing: -0.045em; color: #1d1d1f; }
   .hero-mark { height: 0.76em; width: auto; flex: none; color: #1d1d1f; }
-  .hero .lede { margin-inline: auto; font-size: clamp(19px, 2.2vw, 24px); color: rgba(29, 29, 31, 0.82); }
+  .hero .lede { margin-inline: auto; font-size: clamp(19px, 2.2vw, 24px); color: #1d1d1f; }
   .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-5); margin-top: var(--space-5); }
   .hero .cap-btn-primary { background: #5a0f24; color: #ffffff; }
   .hero .cap-btn-primary:hover { background: #420a1a; }
@@ -82,6 +82,37 @@
   .contact { text-align: center; }
   .contact-email { font: 500 clamp(24px, 4vw, 40px)/1.2 var(--font-sans); letter-spacing: -0.02em; color: var(--brand-bright); text-decoration: none; overflow-wrap: anywhere; }
   .contact-email:hover { text-decoration: underline; }
+
+
+  /* Scroll choreography, Apple style. Everything is complete at rest; supporting browsers animate it as it scrolls into view. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      /* Section headings scale up into place */
+      .h-section { animation: head-in linear both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
+      /* The about photo grows from an inset card to its full frame */
+      .about-media { animation: media-grow linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+      /* Value cards rise one after another */
+      .values-grid .cap-value:nth-child(2) { animation-range: entry 8% cover 34%; }
+      .values-grid .cap-value:nth-child(3) { animation-range: entry 16% cover 40%; }
+      /* Sentences fill in as you read them */
+      .fill-text {
+        color: transparent;
+        background-image: linear-gradient(90deg, var(--fill-on) 50%, var(--fill-off) 50%);
+        background-size: 200% 100%;
+        background-position: 100% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: fill-in linear both;
+        animation-timeline: view();
+        animation-range: cover 15% cover 50%;
+      }
+      .cap-statement .fill-text { --fill-on: #ffffff; --fill-off: rgba(255, 255, 255, 0.28); }
+      .contact-email .fill-text { --fill-on: var(--brand-bright); --fill-off: var(--hairline); animation-range: entry 40% cover 45%; }
+    }
+  }
+  @keyframes head-in { from { opacity: 0.2; transform: scale(0.9) translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes media-grow { from { transform: scale(0.82); border-radius: 48px; opacity: 0.4; } to { transform: none; border-radius: var(--radius-lg); opacity: 1; } }
+  @keyframes fill-in { from { background-position: 100% 0; } to { background-position: 0 0; } }
 
   /* Footer */
   footer { background: var(--surface-alt); color: var(--ink-muted); font-size: 12px; line-height: 1.5; padding-block: var(--space-6); }
@@ -126,7 +157,7 @@
     <div class="hero-wash"></div>
     <div class="wrap hero-content stack center">
       <h1><svg class="hero-mark" viewBox="6 6 86 88" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></h1>
-      <p class="lede">UK Procurement Specialists.</p>
+      <p class="lede">UK Procurement Specialists</p>
       <div class="hero-ctas">
         <a class="cap-btn cap-btn-primary" href="#contact">Get in touch</a>
         <a class="cap-glass cap-glass-btn" href="#about">About us</a>
@@ -141,7 +172,7 @@
         <h2 class="h-section">Buying, done properly.</h2>
         <p>Cappelletti is a UK procurement company. We help organisations source the goods they need from suppliers they can rely on, at a fair price and on time.</p>
       </div>
-      <div class="about-media cap-reveal">
+      <div class="about-media">
         <img src="img/meeting.jpg" alt="Colleagues taking notes around a meeting table" width="1600" height="1067" loading="lazy">
       </div>
     </div>
@@ -150,7 +181,7 @@
   <div class="cap-statement" id="mission" data-tone="dark">
     <div class="cap-statement-inner">
       <p class="cap-eyebrow">Our mission</p>
-      <blockquote class="cap-reveal">To make buying simpler, clearer and better value for the organisations we work with.</blockquote>
+      <blockquote><span class="fill-text">To make buying simpler, clearer and better value for the organisations we work with.</span></blockquote>
     </div>
   </div>
 
@@ -182,7 +213,7 @@
       <p class="cap-eyebrow">Contact us</p>
       <h2 class="h-section">Let's talk.</h2>
       <p class="lede">Tell us what you're looking for and we'll get back to you.</p>
-      <a class="contact-email" href="mailto:hello@cappellettiltd.com">hello@cappellettiltd.com</a>
+      <a class="contact-email" href="mailto:hello@cappellettiltd.com"><span class="fill-text">hello@cappellettiltd.com</span></a>
     </div>
   </section>
 
