@@ -16,6 +16,15 @@
   --ink-muted: #6e6a6c;
   --hairline: #d8d2d4;
   --nav-bg: rgba(255, 255, 255, 0.72);
+  --glass-top: rgba(255, 255, 255, 0.66);
+  --glass-bottom: rgba(255, 255, 255, 0.44);
+  --glass-edge: rgba(255, 255, 255, 0.6);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-outline: rgba(29, 10, 16, 0.12);
+  --glass-shadow: rgba(29, 10, 16, 0.12);
+  --glass-chip: rgba(29, 10, 16, 0.05);
+  --glass-chip-hover: rgba(29, 10, 16, 0.1);
+  --glass-chip-edge: rgba(29, 10, 16, 0.08);
   --success: #1e7a4c;
   --error: #b3261e;
 
@@ -36,6 +45,7 @@
   --radius-md: 18px;
   --radius-lg: 28px;
   --radius-pill: 980px;
+  --radius-nav: 22px;
 
   --shadow-raised: 0 2px 6px rgba(29, 10, 16, 0.06), 0 12px 32px rgba(29, 10, 16, 0.08);
   --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -55,6 +65,15 @@
     --ink-muted: #a19b9e;
     --hairline: #3a3437;
     --nav-bg: rgba(22, 18, 20, 0.72);
+    --glass-top: rgba(44, 38, 41, 0.62);
+    --glass-bottom: rgba(20, 17, 18, 0.5);
+    --glass-edge: rgba(255, 255, 255, 0.14);
+    --glass-highlight: rgba(255, 255, 255, 0.2);
+    --glass-outline: rgba(0, 0, 0, 0.6);
+    --glass-shadow: rgba(0, 0, 0, 0.45);
+    --glass-chip: rgba(255, 255, 255, 0.1);
+    --glass-chip-hover: rgba(255, 255, 255, 0.18);
+    --glass-chip-edge: rgba(255, 255, 255, 0.14);
     --success: #5fd39a;
     --error: #ff8a80;
     --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
@@ -73,6 +92,15 @@
   --ink-muted: #a19b9e;
   --hairline: #3a3437;
   --nav-bg: rgba(22, 18, 20, 0.72);
+  --glass-top: rgba(44, 38, 41, 0.62);
+  --glass-bottom: rgba(20, 17, 18, 0.5);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.2);
+  --glass-outline: rgba(0, 0, 0, 0.6);
+  --glass-shadow: rgba(0, 0, 0, 0.45);
+  --glass-chip: rgba(255, 255, 255, 0.1);
+  --glass-chip-hover: rgba(255, 255, 255, 0.18);
+  --glass-chip-edge: rgba(255, 255, 255, 0.14);
   --success: #5fd39a;
   --error: #ff8a80;
   --shadow-raised: 0 2px 6px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
@@ -125,25 +153,40 @@
 .cap-link:hover::after { transform: translateX(3px); }
 .cap-link-onbrand { color: var(--on-brand); }
 
-/* Global nav: translucent, sticky, 52px tall. */
+/* Global nav: a floating liquid-glass panel with rounded corners. Menu items are buttons at the top of the page;
+   once the page scrolls (.is-scrolled, set by the page) they settle into grey text flush on the glass. */
 .cap-nav {
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
+  position: fixed;
   z-index: 20;
-  background: var(--nav-bg);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--hairline);
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  left: max(12px, env(safe-area-inset-left, 0px));
+  right: max(12px, env(safe-area-inset-right, 0px));
+  max-width: 1080px;
+  margin: 0 auto;
+  border-radius: var(--radius-nav);
+  background: linear-gradient(180deg, var(--glass-top), var(--glass-bottom));
+  -webkit-backdrop-filter: blur(22px) saturate(190%);
+  backdrop-filter: blur(22px) saturate(190%);
+  border: 1px solid var(--glass-edge);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-outline), 0 12px 32px var(--glass-shadow);
+  transition: box-shadow 0.35s var(--ease-out), background 0.35s var(--ease-out);
+}
+.cap-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(120% 140% at 12% -40%, var(--glass-highlight), transparent 55%);
+  opacity: 0.6;
 }
 .cap-nav-inner {
-  max-width: 1024px;
-  margin: 0 auto;
-  height: 52px;
+  position: relative;
+  height: 60px;
   display: flex;
   align-items: center;
-  gap: var(--space-6);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  gap: var(--space-5);
+  padding-inline: 18px 12px;
 }
 /* Logo: the line-drawn cappelletto mark beside the wordmark. The mark is drawn in brand-bright. */
 .cap-logo {
@@ -159,21 +202,46 @@
 .cap-mark { fill: none; stroke: currentColor; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
 .cap-nav-links {
   display: flex;
-  gap: var(--space-5);
+  align-items: center;
+  gap: var(--space-2);
   margin: 0 0 0 auto;
   padding: 0;
   list-style: none;
 }
-.cap-nav-links a {
-  font: 400 13px/1 var(--font-sans);
+.cap-nav-item {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--glass-chip-edge);
+  background: var(--glass-chip);
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  font: 400 14px/1 var(--font-sans);
+  letter-spacing: -0.01em;
   color: var(--ink);
-  opacity: 0.8;
   text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.35s var(--ease-out), border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), color 0.35s var(--ease-out), padding 0.35s var(--ease-out);
 }
-.cap-nav-links a:hover { opacity: 1; }
+.cap-nav-item:hover { background: var(--glass-chip-hover); }
+.cap-nav-cta { background: var(--action); border-color: transparent; box-shadow: none; color: var(--on-brand); }
+.cap-nav-cta:hover { background: var(--action-hover); }
+.cap-nav.is-scrolled .cap-nav-item {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ink-muted);
+  padding: 0 10px;
+}
+.cap-nav.is-scrolled .cap-nav-item:hover { color: var(--ink); }
+.cap-nav-item:focus-visible { outline: 3px solid var(--brand-bright); outline-offset: 2px; }
 @media (max-width: 720px) {
-  .cap-nav-links { display: none; }
-  .cap-nav-inner .cap-btn { margin-left: auto; }
+  .cap-nav-links li:not(:last-child) { display: none; }
+  .cap-logo span { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cap-nav, .cap-nav-item { transition: none; }
 }
 
 /* Eyebrow: the small burgundy line above a headline. */

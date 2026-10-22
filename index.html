@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="assets/cappelletti.css">
 <style>
   /* Layout: a short Apple-style scroll. One centred column for words, full-bleed hero photo and mission band. */
-  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
     margin: 0;
@@ -22,7 +22,6 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: clip;
   }
-  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--nav-bg); }
   img { max-width: 100%; }
   .wrap {
     max-width: 1024px;
@@ -39,7 +38,7 @@
   .center { text-align: center; align-items: center; }
 
   /* Hero */
-  .hero { padding-block: var(--space-9) 0; text-align: center; }
+  .hero { padding-block: calc(env(safe-area-inset-top, 0px) + 72px + var(--space-8)) 0; text-align: center; }
   .hero-mark { width: clamp(88px, 12vw, 128px); height: auto; color: var(--brand-bright); margin-bottom: var(--space-3); }
   .hero h1 { font: 500 clamp(56px, 11vw, 120px)/1 var(--font-sans); letter-spacing: -0.04em; }
   .hero .lede { margin-inline: auto; }
@@ -101,16 +100,15 @@
   </defs>
 </svg>
 
-<nav class="cap-nav" aria-label="Main">
+<nav class="cap-nav" id="site-nav" aria-label="Main">
   <div class="cap-nav-inner">
     <a class="cap-logo" href="#top" aria-label="Cappelletti, home"><svg viewBox="4 28 92 52" aria-hidden="true"><use href="#cap-mark"/></svg><span>Cappelletti</span></a>
     <ul class="cap-nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#mission">Mission</a></li>
-      <li><a href="#values">Values</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a class="cap-nav-item" href="#about">About</a></li>
+      <li><a class="cap-nav-item" href="#mission">Mission</a></li>
+      <li><a class="cap-nav-item" href="#values">Values</a></li>
+      <li><a class="cap-nav-item cap-nav-cta" href="#contact">Get in touch</a></li>
     </ul>
-    <a class="cap-btn cap-btn-primary cap-btn-sm" href="#contact">Get in touch</a>
   </div>
 </nav>
 
@@ -191,6 +189,15 @@
     <p>Copyright © 2026 Cappelletti. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav'), ticking = false;
+    function update() { nav.classList.toggle('is-scrolled', window.scrollY > 24); ticking = false; }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();
+</script>
 
 </body>
 </html>
