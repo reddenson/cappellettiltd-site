@@ -45,6 +45,18 @@
       letter-spacing: 0.04em;
       opacity: 0.85;
     }
+    .email {
+      display: inline-block;
+      margin-top: 2.5rem;
+      color: #fff;
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      opacity: 0.7;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+      padding-bottom: 2px;
+    }
+    .email:hover, .email:focus-visible { opacity: 1; border-bottom-color: #fff; }
   </style>
 </head>
 <body>
@@ -52,6 +64,7 @@
     <svg class="mark" viewBox="6 6 86 88" role="img" aria-label="Cappelletti logo"><path d="M43.6 16.8 Q50 10.4 58.25 14.5 C71.53 22.92 87 40.16 87 50 C87 59.84 71.53 77.08 58.25 85.5 Q50 89.6 43.6 83.2 L10.4 50 Z"/><circle cx="52.5" cy="50" r="15.5"/></svg>
     <h1>Cappelletti is Cooking</h1>
     <p>UK Procurement Specialists</p>
+    <a class="email" href="mailto:info@cappellettiltd.com">info@cappellettiltd.com</a>
   </main>
 </body>
 </html>
